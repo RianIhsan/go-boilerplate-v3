@@ -1,9 +1,9 @@
 package server
 
 import (
-
 	permissionDelivery "ams-sentuh/internal/features/permission/delivery/http"
 	userDelivery "ams-sentuh/internal/features/user/delivery/http"
+	"ams-sentuh/pkg/uploader"
 
 	userRepo "ams-sentuh/internal/features/user/repository"
 	userService "ams-sentuh/internal/features/user/service"
@@ -23,8 +23,6 @@ import (
 	"ams-sentuh/internal/middleware"
 	casbinSV "ams-sentuh/internal/middleware/casbin"
 	"net/http"
-
-	
 )
 
 func (s *Server) Bootstrap() error {
@@ -39,11 +37,10 @@ func (s *Server) Bootstrap() error {
 	accessPostgresRepo := accessRepo.NewAccessPostgresRepository(s.db)
 	permissionPostgresRepo := permissionRepo.NewPermissionPostgresRepository(s.db)
 
-
 	// -----------------------------------------------------------------------------------------------------------
 	// create a new instance services
 	initCasbin := casbinSV.NewService(enforcer)
-	// initMinio := uploader.NewMinioUploader(s.cfg)
+	initMinio := uploader.NewMinioUploader(s.cfg)
 
 	// deviceSV := deviceService.NewDeviceService(&deviceService.ServiceConfig{
 	// 	DeviceRepoInterface: devicePostgresRepo,
@@ -57,6 +54,7 @@ func (s *Server) Bootstrap() error {
 		Logger:            s.logger,
 		Config:            s.cfg,
 		Casbin:            initCasbin,
+		MinioClient:       initMinio,
 	})
 
 	roleSV := roleService.NewRoleService(&roleService.ServiceConfig{
