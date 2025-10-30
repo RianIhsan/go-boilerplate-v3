@@ -47,6 +47,7 @@ type VerifyOTPResponse struct {
 
 type UserDTO struct {
 	ID        uint64    `json:"id"`
+	Avatar    string    `json:"avatar"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
 	NfCTag    string    `json:"nfc_tag"`
@@ -59,6 +60,7 @@ type UserDTO struct {
 func ToUserDTO(user entities.User) UserDTO {
 	return UserDTO{
 		ID:        user.ID,
+		Avatar:    user.Avatar,
 		Name:      user.Name,
 		Email:     user.Email,
 		NfCTag:    user.NFCTag,
