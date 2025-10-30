@@ -6,7 +6,10 @@ import (
 	"ams-sentuh/internal/features/user"
 	"ams-sentuh/internal/features/user/dto"
 	"ams-sentuh/internal/middleware/casbin"
+	"ams-sentuh/pkg/uploader"
 	"context"
+	"mime/multipart"
+
 	// "ams-sentuh/pkg/broker"
 	"ams-sentuh/pkg/utils"
 
@@ -17,6 +20,7 @@ type userService struct {
 	cfg           *config.Config
 	userRepo      user.UserRepositoryInterface
 	casbinService casbin.CasbinService
+	minioService  uploader.FileUploaderInterface
 }
 
 func NewUserService(cfg *ServiceConfig) user.UserServiceInterface {
@@ -24,6 +28,7 @@ func NewUserService(cfg *ServiceConfig) user.UserServiceInterface {
 		cfg:           cfg.Config,
 		userRepo:      cfg.UserRepoInterface,
 		casbinService: cfg.Casbin,
+		minioService:  cfg.MinioClient,
 	}
 }
 
@@ -133,6 +138,20 @@ func (uS *userService) SelfUpdate(ctx context.Context, userId uint64, data dto.S
 	})
 	if err != nil {
 		return errors.Wrap(err, "failed to update user")
+	}
+	return nil
+}
+
+func (uS *userService) UpdateAvatar(ctx context.Context, userId uint64, file *multipart.FileHeader) error {
+	avatar, err := uS.minioService.UploadFile(ctx, uS.cfg.Minio.BucketName, file)
+	if err != nil {
+		return errors.Wrap(err, "failed to upload avatar")
+	}
+	err = uS.userRepo.Update(ctx, userId, entities.User{
+		Avatar: avatar,
+	})
+	if err != nil {
+		return errors.Wrap(err, "failed to update avatar")
 	}
 	return nil
 }

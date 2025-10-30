@@ -10,6 +10,7 @@ type UserDeliveryInterface interface {
 	GetById() gin.HandlerFunc
 	Update() gin.HandlerFunc
 	SelfUpdate() gin.HandlerFunc
+	UpdateAvatar() gin.HandlerFunc
 	// 	GenerateOTP() gin.HandlerFunc
 	// 	VerifyOTP() gin.HandlerFunc
 	// 	ResetPassword() gin.HandlerFunc

@@ -3,6 +3,7 @@ package user
 import (
 	"ams-sentuh/internal/features/user/dto"
 	"context"
+	"mime/multipart"
 )
 
 type UserServiceInterface interface {
@@ -13,6 +14,7 @@ type UserServiceInterface interface {
 	Delete(ctx context.Context, userId uint64) error
 	Update(ctx context.Context, id uint64, data dto.UpdateUserRequest) error
 	SelfUpdate(ctx context.Context, userId uint64, data dto.SelfUpdateRequest) error
+	UpdateAvatar(ctx context.Context, userId uint64, file *multipart.FileHeader) error
 	// ForgotPassword(ctx context.Context, email string) error
 	// VerifyOTP(ctx context.Context, email string, otp int) (string, error)
 	// ResetPassword(ctx context.Context, request dto.ResetPasswordRequest) error
