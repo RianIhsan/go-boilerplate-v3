@@ -4,9 +4,11 @@ import (
 	"ams-sentuh/config"
 	"ams-sentuh/internal/features/user"
 	"ams-sentuh/internal/features/user/dto"
+	"ams-sentuh/internal/middleware"
 	"ams-sentuh/pkg/httpErrors/response"
 	"ams-sentuh/pkg/utils"
 	"ams-sentuh/pkg/validation"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -144,6 +146,32 @@ func (u *userDelivery) DeleteUser() gin.HandlerFunc {
 			response.SendErrorResponse(c, http.StatusInternalServerError, err.Error())
 			return
 		}
+		response.SendSuccesResponse(c, http.StatusOK, "success", nil)
+	}
+}
+
+func (u *userDelivery) SelfUpdate() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		authData, exist := c.Get("authData")
+		if !exist {
+			utils.LogErrorResponse(c, u.logger, errors.New("authData not found"))
+			response.SendErrorResponse(c, http.StatusInternalServerError, "authData not found")
+			return
+		}
+		request := new(dto.SelfUpdateRequest)
+		if err := c.ShouldBindJSON(request); err != nil {
+			utils.LogErrorResponse(c, u.logger, err)
+			response.SendErrorResponse(c, http.StatusBadRequest, "Invalid request body")
+			return
+		}
+		auth := authData.(*middleware.Auth)
+		err := u.service.SelfUpdate(c, auth.Id, *request)
+		if err != nil {
+			utils.LogErrorResponse(c, u.logger, err)
+			response.SendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+
 		response.SendSuccesResponse(c, http.StatusOK, "success", nil)
 	}
 }

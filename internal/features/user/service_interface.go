@@ -1,8 +1,8 @@
 package user
 
 import (
-	"context"
 	"ams-sentuh/internal/features/user/dto"
+	"context"
 )
 
 type UserServiceInterface interface {
@@ -12,6 +12,7 @@ type UserServiceInterface interface {
 	GetById(ctx context.Context, userId uint64) (dto.UserDTO, error)
 	Delete(ctx context.Context, userId uint64) error
 	Update(ctx context.Context, id uint64, data dto.UpdateUserRequest) error
+	SelfUpdate(ctx context.Context, userId uint64, data dto.SelfUpdateRequest) error
 	// ForgotPassword(ctx context.Context, email string) error
 	// VerifyOTP(ctx context.Context, email string, otp int) (string, error)
 	// ResetPassword(ctx context.Context, request dto.ResetPasswordRequest) error
