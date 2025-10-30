@@ -24,5 +24,6 @@ func MapUserRoutes(
 	casbinGroup.GET("/users", delivery.GetList())
 	casbinGroup.GET("/users/:id", delivery.GetById())
 	casbinGroup.PUT("/users/protected", delivery.SelfUpdate())
+	casbinGroup.PUT("/users/avatar", delivery.UpdateAvatar())
 
 }

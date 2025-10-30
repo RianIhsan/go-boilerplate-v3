@@ -176,6 +176,32 @@ func (u *userDelivery) SelfUpdate() gin.HandlerFunc {
 	}
 }
 
+func (u *userDelivery) UpdateAvatar() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		authData, exist := c.Get("auth")
+		if !exist {
+			utils.LogErrorResponse(c, u.logger, errors.New("authData not found"))
+			response.SendErrorResponse(c, http.StatusInternalServerError, "authData not found")
+			return
+		}
+		auth := authData.(*middleware.Auth)
+
+		file, err := c.FormFile("file")
+		if err != nil {
+			utils.LogErrorResponse(c, u.logger, err)
+			response.SendErrorResponse(c, http.StatusBadRequest, "invalid request body")
+			return
+		}
+		err = u.service.UpdateAvatar(c, auth.Id, file)
+		if err != nil {
+			utils.LogErrorResponse(c, u.logger, err)
+			response.SendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+		response.SendSuccesResponse(c, http.StatusOK, "success", nil)
+	}
+}
+
 // func (u *userDelivery) GenerateOTP() gin.HandlerFunc {
 
 // 	return func(c *gin.Context) {

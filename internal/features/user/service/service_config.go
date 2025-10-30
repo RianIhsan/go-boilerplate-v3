@@ -1,10 +1,12 @@
 package service
 
 import (
-	"github.com/sirupsen/logrus"
 	"ams-sentuh/config"
 	"ams-sentuh/internal/features/user"
 	"ams-sentuh/internal/middleware/casbin"
+	"ams-sentuh/pkg/uploader"
+
+	"github.com/sirupsen/logrus"
 )
 
 type ServiceConfig struct {
@@ -12,4 +14,5 @@ type ServiceConfig struct {
 	Logger            *logrus.Logger
 	Config            *config.Config
 	Casbin            casbin.CasbinService
+	MinioClient       uploader.FileUploaderInterface
 }
