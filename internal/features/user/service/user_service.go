@@ -1,12 +1,12 @@
 package service
 
 import (
-	"context"
 	"ams-sentuh/config"
 	"ams-sentuh/internal/entities"
 	"ams-sentuh/internal/features/user"
 	"ams-sentuh/internal/features/user/dto"
 	"ams-sentuh/internal/middleware/casbin"
+	"context"
 	// "ams-sentuh/pkg/broker"
 	"ams-sentuh/pkg/utils"
 
@@ -37,7 +37,7 @@ func (uS *userService) AddUser(ctx context.Context, req dto.RegisterUserRequest)
 		return dto.RegisterUserResponse{}, errors.Wrap(err, "failed to prepare user data")
 	}
 
-	createdUser, err := uS.userRepo.Create(ctx, dto.ConvertToEntityUserRequest(req))
+	createdUser, err := uS.userRepo.Create(ctx, dto.ConvertToEntityUserRequest(req, uS.cfg))
 	if err != nil {
 		return dto.RegisterUserResponse{}, errors.Wrap(err, "failed to create user")
 	}
@@ -95,9 +95,9 @@ func (uS *userService) GetById(ctx context.Context, userId uint64) (dto.UserDTO,
 
 func (uS *userService) Update(ctx context.Context, id uint64, data dto.UpdateUserRequest) error {
 	err := uS.userRepo.Update(ctx, id, entities.User{
-		Name:     data.Name,
-		Email:    data.Email,
-		RoleID:   data.RoleId,
+		Name:   data.Name,
+		Email:  data.Email,
+		RoleID: data.RoleId,
 	})
 	if err != nil {
 		return errors.Wrap(err, "failed to update user")
@@ -263,5 +263,3 @@ func (uS *userService) Delete(ctx context.Context, userId uint64) error {
 
 // 	return nil
 // }
-
-

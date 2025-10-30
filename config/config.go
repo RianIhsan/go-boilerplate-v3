@@ -103,6 +103,7 @@ type MinioConfig struct {
 	SecretAccessKey string
 	UseSSL          bool
 	BucketName      string
+	DefaultAvatar   string
 }
 
 type SMTPConfig struct {
@@ -203,6 +204,7 @@ func NewAppConfig(configPath string) (*Config, error) {
 	cfg.Minio.SecretAccessKey = v.GetString("MINIO_SECRET_ACCESS_KEY")
 	cfg.Minio.UseSSL = v.GetBool("MINIO_USE_SSL")
 	cfg.Minio.BucketName = v.GetString("MINIO_BUCKET_NAME")
+	cfg.Minio.DefaultAvatar = v.GetString("MINIO_DEFAULT_AVATAR")
 
 	cfg.SMTP.Host = v.GetString("SMTP_HOST")
 	cfg.SMTP.Port = v.GetString("SMTP_PORT")

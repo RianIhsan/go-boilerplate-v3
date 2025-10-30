@@ -1,10 +1,10 @@
 package main
 
 import (
+	"ams-sentuh/config"
 	// "context"
 	// "fmt"
 	"log"
-	"ams-sentuh/config"
 	// "ams-sentuh/internal/entities"
 	// logRepository "ams-sentuh/internal/features/log"
 	// initLogRepo "ams-sentuh/internal/features/log/repository"

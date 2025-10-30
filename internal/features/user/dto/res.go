@@ -8,6 +8,7 @@ import (
 type RegisterUserResponse struct {
 	Id       uint64 `json:"id"`
 	Name     string `json:"name"`
+	Avatar   string `json:"avatar"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
 	RoleId   uint64 `json:"role_id"`
@@ -15,10 +16,11 @@ type RegisterUserResponse struct {
 
 func ConvertToRegisterUserResponse(entities *entities.User) RegisterUserResponse {
 	return RegisterUserResponse{
-		Id:       entities.ID,
-		Name:     entities.Name,
-		Email:    entities.Email,
-		RoleId:   entities.RoleID,
+		Id:     entities.ID,
+		Name:   entities.Name,
+		Avatar: entities.Avatar,
+		Email:  entities.Email,
+		RoleId: entities.RoleID,
 	}
 }
 
@@ -44,24 +46,24 @@ type VerifyOTPResponse struct {
 }
 
 type UserDTO struct {
-	ID          uint64    `json:"id"`
-	Name        string    `json:"name"`
-	Email       string    `json:"email"`
-	RoleId      uint64    `json:"role_id"`
-	RoleName    string    `json:"role_name"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID        uint64    `json:"id"`
+	Name      string    `json:"name"`
+	Email     string    `json:"email"`
+	RoleId    uint64    `json:"role_id"`
+	RoleName  string    `json:"role_name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 func ToUserDTO(user entities.User) UserDTO {
 	return UserDTO{
-		ID:          user.ID,
-		Name:        user.Name,
-		Email:       user.Email,
-		RoleId:      user.RoleID,
-		RoleName:    user.Role.Name,
-		CreatedAt:   user.CreatedAt,
-		UpdatedAt:   user.UpdatedAt,
+		ID:        user.ID,
+		Name:      user.Name,
+		Email:     user.Email,
+		RoleId:    user.RoleID,
+		RoleName:  user.Role.Name,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
 	}
 }
 

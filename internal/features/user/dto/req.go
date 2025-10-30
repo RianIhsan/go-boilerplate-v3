@@ -1,6 +1,7 @@
 package dto
 
 import (
+	"ams-sentuh/config"
 	"ams-sentuh/internal/entities"
 	"strings"
 
@@ -9,10 +10,10 @@ import (
 )
 
 type RegisterUserRequest struct {
-	Name      string  `json:"name" validate:"required,min=3,max=100"`
-	Email     string  `json:"email" validate:"required,email,max=100"`
-	Password  string  `json:"password" validate:"required,min=8,max=100"`
-	RoleId    uint    `json:"role_id"`
+	Name     string `json:"name" validate:"required,min=3,max=100"`
+	Email    string `json:"email" validate:"required,email,max=100"`
+	Password string `json:"password" validate:"required,min=8,max=100"`
+	RoleId   uint   `json:"role_id"`
 }
 
 type UpdateUserRequest struct {
@@ -49,13 +50,14 @@ func ConvertToEntityLoginRequest(request LoginUserRequest) entities.User {
 	}
 }
 
-func ConvertToEntityUserRequest(request RegisterUserRequest) entities.User {
+func ConvertToEntityUserRequest(request RegisterUserRequest, cfg *config.Config) entities.User {
 
 	return entities.User{
-		Name:      request.Name,
-		Email:     request.Email,
-		Password:  request.Password,
-		RoleID:    uint64(request.RoleId),
+		Name:     request.Name,
+		Email:    request.Email,
+		Avatar:   cfg.Minio.DefaultAvatar,
+		Password: request.Password,
+		RoleID:   uint64(request.RoleId),
 	}
 }
 
