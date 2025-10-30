@@ -152,7 +152,7 @@ func (u *userDelivery) DeleteUser() gin.HandlerFunc {
 
 func (u *userDelivery) SelfUpdate() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		authData, exist := c.Get("authData")
+		authData, exist := c.Get("auth")
 		if !exist {
 			utils.LogErrorResponse(c, u.logger, errors.New("authData not found"))
 			response.SendErrorResponse(c, http.StatusInternalServerError, "authData not found")
