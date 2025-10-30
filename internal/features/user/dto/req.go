@@ -23,6 +23,12 @@ type UpdateUserRequest struct {
 	RoleId   uint64 `json:"role_id"`
 }
 
+type SelfUpdateRequest struct {
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	NFCTag string `json:"nfc_tag"`
+}
+
 type LoginUserRequest struct {
 	Email    string `json:"email" validate:"required,email,max=100"`
 	Password string `json:"password" validate:"required,min=8,max=100"`

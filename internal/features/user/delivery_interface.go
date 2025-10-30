@@ -9,6 +9,7 @@ type UserDeliveryInterface interface {
 	DeleteUser() gin.HandlerFunc
 	GetById() gin.HandlerFunc
 	Update() gin.HandlerFunc
+	SelfUpdate() gin.HandlerFunc
 	// 	GenerateOTP() gin.HandlerFunc
 	// 	VerifyOTP() gin.HandlerFunc
 	// 	ResetPassword() gin.HandlerFunc

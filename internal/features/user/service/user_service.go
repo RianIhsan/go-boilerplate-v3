@@ -125,6 +125,18 @@ func (uS *userService) Delete(ctx context.Context, userId uint64) error {
 	return nil
 }
 
+func (uS *userService) SelfUpdate(ctx context.Context, userId uint64, data dto.SelfUpdateRequest) error {
+	err := uS.userRepo.Update(ctx, userId, entities.User{
+		Name:   data.Name,
+		Email:  data.Email,
+		NFCTag: data.NFCTag,
+	})
+	if err != nil {
+		return errors.Wrap(err, "failed to update user")
+	}
+	return nil
+}
+
 // func (uS *userService) ForgotPassword(ctx context.Context, email string) error {
 // 	getUser, err := uS.userRepo.FindByEmail(ctx, entities.User{Email: email})
 // 	if err != nil {
