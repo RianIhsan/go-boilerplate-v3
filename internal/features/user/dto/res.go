@@ -49,6 +49,7 @@ type UserDTO struct {
 	ID        uint64    `json:"id"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
+	NfCTag    string    `json:"nfc_tag"`
 	RoleId    uint64    `json:"role_id"`
 	RoleName  string    `json:"role_name"`
 	CreatedAt time.Time `json:"created_at"`
@@ -60,6 +61,7 @@ func ToUserDTO(user entities.User) UserDTO {
 		ID:        user.ID,
 		Name:      user.Name,
 		Email:     user.Email,
+		NfCTag:    user.NFCTag,
 		RoleId:    user.RoleID,
 		RoleName:  user.Role.Name,
 		CreatedAt: user.CreatedAt,

@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"context"
-	"fmt"
 	"ams-sentuh/internal/entities"
 	"ams-sentuh/internal/features/user"
+	"context"
+	"fmt"
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -38,9 +38,9 @@ func (u *userPostgresRepository) FindByEmail(ctx context.Context, entity entitie
 func (u *userPostgresRepository) GetList(ctx context.Context, roleId uint64) ([]entities.User, error) {
 	var users []entities.User
 	query := u.db.WithContext(ctx).Model(&entities.User{}).
-		Preload("Role").
-		Preload("Branch").
-		Preload("Company")
+		Preload("Role")
+	//Preload("Branch").
+	//Preload("Company")
 
 	if roleId != 0 {
 		query = query.Where("role_id = ?", roleId)
@@ -55,9 +55,9 @@ func (u *userPostgresRepository) GetList(ctx context.Context, roleId uint64) ([]
 func (u *userPostgresRepository) FindById(ctx context.Context, userId uint64) (entities.User, error) {
 	var user entities.User
 	DB := u.db.WithContext(ctx).
-		Preload("Role").
-		Preload("Branch").
-		Preload("Company")
+		Preload("Role")
+	//Preload("Branch").
+	//Preload("Company")
 
 	if err := DB.Where("id = ?", userId).Take(&user).Error; err != nil {
 		return entities.User{}, err
