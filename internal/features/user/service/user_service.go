@@ -99,14 +99,20 @@ func (uS *userService) GetById(ctx context.Context, userId uint64) (dto.UserDTO,
 }
 
 func (uS *userService) Update(ctx context.Context, id uint64, data dto.UpdateUserRequest) error {
+	if err := data.PrepareUpdate(); err != nil {
+		return errors.Wrap(err, "failed to prepare update user")
+	}
+
 	err := uS.userRepo.Update(ctx, id, entities.User{
-		Name:   data.Name,
-		Email:  data.Email,
-		RoleID: data.RoleId,
+		Name:     data.Name,
+		Email:    data.Email,
+		Password: data.Password,
+		RoleID:   data.RoleId,
 	})
 	if err != nil {
 		return errors.Wrap(err, "failed to update user")
 	}
+
 	return nil
 }
 

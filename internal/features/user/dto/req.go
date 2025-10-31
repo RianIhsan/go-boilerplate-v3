@@ -108,3 +108,26 @@ func (u *ResetPasswordRequest) PrepareResetPassword() error {
 	}
 	return nil
 }
+
+func (u *UpdateUserRequest) HashPassword() error {
+	if u.Password == "" {
+		return nil // jika kosong, tidak perlu hash
+	}
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return errors.Wrap(err, "User.Update.HashPassword.GenerateFromPassword")
+	}
+	u.Password = string(hashedPass)
+	return nil
+}
+
+func (u *UpdateUserRequest) PrepareUpdate() error {
+	u.Email = strings.ToLower(strings.TrimSpace(u.Email))
+	u.Password = strings.TrimSpace(u.Password)
+	u.Name = strings.TrimSpace(u.Name)
+
+	if err := u.HashPassword(); err != nil {
+		return err
+	}
+	return nil
+}
