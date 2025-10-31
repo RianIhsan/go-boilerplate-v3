@@ -15,4 +15,4 @@ deploy_to_vps:
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend && make build-api"'
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "supervisorctl restart ams-backend"'
   only:
-    - dev
+    - main
