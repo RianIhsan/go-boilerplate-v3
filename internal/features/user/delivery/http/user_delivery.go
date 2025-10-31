@@ -114,6 +114,27 @@ func (u *userDelivery) GetById() gin.HandlerFunc {
 	}
 }
 
+func (u *userDelivery) GetMe() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		authData, exists := c.Get("auth")
+		if !exists {
+			utils.LogErrorResponse(c, u.logger, errors.New("no auth found"))
+			response.SendErrorResponse(c, http.StatusUnauthorized, "no auth found")
+			return
+		}
+
+		auth := authData.(*middleware.Auth)
+		getUser, err := u.service.GetById(c, auth.Id)
+		if err != nil {
+			utils.LogErrorResponse(c, u.logger, err)
+			response.SendErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		response.SendSuccesResponse(c, http.StatusOK, "success", getUser)
+	}
+}
+
 func (u *userDelivery) Update() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
