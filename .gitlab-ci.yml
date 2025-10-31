@@ -12,7 +12,7 @@ deploy_to_vps:
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && git config --global --add safe.directory /var/www/html/ams-backend-go"'
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && git remote set-url origin https://ams-token-repo:$GITLAB_TOKEN@gitlab.com/sentuhdev/ams-sentuh/ams-backend-go.git"'
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && git pull"'
-    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && go build -o ./api ./cmd/api/main.go"'
+    - 'sshpass -p "$VPS_PASSWORD" ssh -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "/usr/local/go/bin/go version && cd /var/www/html/ams-backend-go && /usr/local/go/bin/go build -o ./api ./cmd/api/main.go"'
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "supervisorctl restart ams-backend"'
   only:
     - main
