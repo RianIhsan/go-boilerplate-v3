@@ -1,0 +1,6 @@
+p, 1, /users, READ
+p, 1, /api/v1/users, GET
+p, 1, /api/v1/users/*, GET
+p, 1, /api/v1/users/protected, PUT
+p, 1, /api/v1/users/avatar, PUT
+g, 1, 1
