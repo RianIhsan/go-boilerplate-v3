@@ -23,7 +23,7 @@ build: build-api build-worker build-realtime
 
 # Supervisor commands
 restart-api:
-	supervisorctl restart dms-backend
+	supervisorctl restart ams-backend
 
 restart-worker:
 	supervisorctl restart dms-worker
