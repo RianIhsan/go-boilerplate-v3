@@ -21,7 +21,9 @@ build-realtime:
 build: build-api build-worker build-realtime
 	@echo "✅ All services built"
 
-# Supervisor comma-backend
+# Supervisor commands
+restart-api:
+	supervisorctl restart ams-backend
 
 restart-worker:
 	supervisorctl restart dms-worker
