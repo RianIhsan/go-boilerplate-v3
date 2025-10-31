@@ -49,13 +49,13 @@ user-controller-test:
 
 # ==============================================================================
 # Docker compose commands
-local:
-	echo "Starting local environment"
-	docker-compose -f docker-compose.local.yaml up --build -d
-
-develop:
-	echo "Starting docker environment"
-	docker compose -f docker-compose.dev.yaml up --build -d
+#local:
+#	echo "Starting local environment"
+#	docker-compose -f docker-compose.local.yaml up --build -d
+#
+#develop:
+#	echo "Starting docker environment"
+#	docker compose -f docker-compose.dev.yaml up --build -d
 #===============================================================================
 
 # ==============================================================================
@@ -74,16 +74,16 @@ gen_self_signed_cert:
 # ==============================================================================
 # Docker support
 
-FILES := $(shell docker ps -aq)
-
-down-local:
-	docker stop $(FILES) 	#perintah Docker untuk menghentikan semua container yang id nya ada di dalam variable files
-	docker rm $(FILES) 		#perintah ini akan menghapus semua container yang id nya ada di dalam variabel files
-
-# membersihkan resource Docker yang tidak digunakan seperti container berhenti,
-# image lama, volume, dan network yang tidak terpakai
-clean:
-	docker system prune -f
+#FILES := $(shell docker ps -aq)
+#
+#down-local:
+#	docker stop $(FILES) 	#perintah Docker untuk menghentikan semua container yang id nya ada di dalam variable files
+#	docker rm $(FILES) 		#perintah ini akan menghapus semua container yang id nya ada di dalam variabel files
+#
+## membersihkan resource Docker yang tidak digunakan seperti container berhenti,
+## image lama, volume, dan network yang tidak terpakai
+#clean:
+#	docker system prune -f
 
 # ==============================================================================
 # Modules support
