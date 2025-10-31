@@ -14,8 +14,6 @@ func MapUserRoutes(
 
 	userGroup.POST("/register", delivery.RegisterUser())
 	userGroup.POST("/login", delivery.LoginUser())
-	userGroup.PUT("/users/:id", delivery.Update())
-	userGroup.DELETE("users/:id", delivery.DeleteUser())
 
 	casbinGroup := userGroup.Group("")
 	casbinGroup.Use(mw.AuthMiddleware())
@@ -26,4 +24,6 @@ func MapUserRoutes(
 	casbinGroup.PUT("/users/protected", delivery.SelfUpdate())
 	casbinGroup.PUT("/users/avatar", delivery.UpdateAvatar())
 	casbinGroup.GET("/users/me", delivery.GetMe())
+	casbinGroup.PUT("/users/:id", delivery.Update())
+	casbinGroup.DELETE("users/:id", delivery.DeleteUser())
 }
