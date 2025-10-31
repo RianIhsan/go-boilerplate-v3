@@ -9,10 +9,10 @@ deploy_to_vps:
     - apk add --no-cache openssh-client sshpass
   script:
     - 'echo "Deploying to: $VPS_USER@$VPS_HOST"'
-    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend && git config --global --add safe.directory /var/www/html/ams-backend"'
-    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend && git remote set-url origin https://ams-token-repo:$GITLAB_TOKEN@gitlab.com/sentuhdev/ams-sentuh/ams-backend-go.git"'
-    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend && git pull"'
-    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend && make build-api"'
+    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && git config --global --add safe.directory /var/www/html/ams-backend-go"'
+    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && git remote set-url origin https://ams-token-repo:$GITLAB_TOKEN@gitlab.com/sentuhdev/ams-sentuh/ams-backend-go.git"'
+    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && git pull"'
+    - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "cd /var/www/html/ams-backend-go && make build-api"'
     - 'sshpass -p "$VPS_PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$VPS_USER@$VPS_HOST" "supervisorctl restart ams-backend"'
   only:
     - main
