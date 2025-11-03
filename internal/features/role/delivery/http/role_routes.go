@@ -13,7 +13,7 @@ func MapRoleRoutes(roleGroup *gin.RouterGroup, delivery role.RoleDeliveryInterfa
 	protectedGroup.Use(mw.CasbinMiddleware())
 
 	protectedGroup.GET("/role", delivery.GetAllRole())
-	roleGroup.PUT("/role/permission", delivery.ModifyRolePermission())
+	protectedGroup.PUT("/role/permission", delivery.ModifyRolePermission())
 	protectedGroup.POST("/role", delivery.RegisterRole())
 	protectedGroup.GET("/role/:id", delivery.GetRoleByID())
 	protectedGroup.PUT("/role/:id", delivery.UpdateRole())
