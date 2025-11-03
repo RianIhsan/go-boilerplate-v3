@@ -104,6 +104,7 @@ func (uS *userService) Update(ctx context.Context, id uint64, data dto.UpdateUse
 	}
 
 	err := uS.userRepo.Update(ctx, id, entities.User{
+		Username: data.Username,
 		Name:     data.Name,
 		Email:    data.Email,
 		Password: data.Password,
@@ -138,9 +139,10 @@ func (uS *userService) Delete(ctx context.Context, userId uint64) error {
 
 func (uS *userService) SelfUpdate(ctx context.Context, userId uint64, data dto.SelfUpdateRequest) error {
 	err := uS.userRepo.Update(ctx, userId, entities.User{
-		Name:   data.Name,
-		Email:  data.Email,
-		NFCTag: data.NFCTag,
+		Name:     data.Name,
+		Username: data.Username,
+		Email:    data.Email,
+		NFCTag:   data.NFCTag,
 	})
 	if err != nil {
 		return errors.Wrap(err, "failed to update user")

@@ -58,7 +58,6 @@ type UserDTO struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// ✅ Fix nil pointer safe version
 func ToUserDTO(user entities.User) UserDTO {
 	var nfcTag string
 	if user.NFCTag != nil {

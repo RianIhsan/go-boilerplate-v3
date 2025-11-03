@@ -19,15 +19,17 @@ type RegisterUserRequest struct {
 
 type UpdateUserRequest struct {
 	Name     string `json:"name"`
+	Username string `json:"username"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	RoleId   uint64 `json:"role_id"`
 }
 
 type SelfUpdateRequest struct {
-	Name   string  `json:"name"`
-	Email  string  `json:"email"`
-	NFCTag *string `json:"nfc_tag"`
+	Name     string  `json:"name"`
+	Email    string  `json:"email"`
+	Username string  `json:"username"`
+	NFCTag   *string `json:"nfc_tag"`
 }
 
 type LoginUserRequest struct {
