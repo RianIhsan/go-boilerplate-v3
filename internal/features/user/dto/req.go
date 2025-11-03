@@ -58,9 +58,9 @@ func ConvertToEntityLoginRequest(request LoginUserRequest) entities.User {
 }
 
 func ConvertToEntityUserRequest(request RegisterUserRequest, cfg *config.Config) entities.User {
-
 	return entities.User{
 		Name:     request.Name,
+		Username: request.Username,
 		Email:    request.Email,
 		Avatar:   cfg.Minio.DefaultAvatar,
 		Password: request.Password,
