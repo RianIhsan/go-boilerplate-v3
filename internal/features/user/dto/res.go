@@ -16,11 +16,12 @@ type RegisterUserResponse struct {
 
 func ConvertToRegisterUserResponse(entities *entities.User) RegisterUserResponse {
 	return RegisterUserResponse{
-		Id:     entities.ID,
-		Name:   entities.Name,
-		Avatar: entities.Avatar,
-		Email:  entities.Email,
-		RoleId: entities.RoleID,
+		Id:       entities.ID,
+		Name:     entities.Name,
+		Username: entities.Username,
+		Avatar:   entities.Avatar,
+		Email:    entities.Email,
+		RoleId:   entities.RoleID,
 	}
 }
 
@@ -49,6 +50,7 @@ type UserDTO struct {
 	ID        uint64    `json:"id"`
 	Avatar    string    `json:"avatar"`
 	Name      string    `json:"name"`
+	Username  string    `json:"username"`
 	Email     string    `json:"email"`
 	NfCTag    string    `json:"nfc_tag"`
 	RoleId    uint64    `json:"role_id"`
@@ -62,8 +64,9 @@ func ToUserDTO(user entities.User) UserDTO {
 		ID:        user.ID,
 		Avatar:    user.Avatar,
 		Name:      user.Name,
+		Username:  user.Username,
 		Email:     user.Email,
-		NfCTag:    user.NFCTag,
+		NfCTag:    *user.NFCTag,
 		RoleId:    user.RoleID,
 		RoleName:  user.Role.Name,
 		CreatedAt: user.CreatedAt,

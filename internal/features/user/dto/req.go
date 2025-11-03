@@ -11,6 +11,7 @@ import (
 
 type RegisterUserRequest struct {
 	Name     string `json:"name" validate:"required,min=3,max=100"`
+	Username string `json:"username" validate:"required,min=3,max=100"`
 	Email    string `json:"email" validate:"required,email,max=100"`
 	Password string `json:"password" validate:"required,min=8,max=100"`
 	RoleId   uint   `json:"role_id"`
@@ -24,9 +25,9 @@ type UpdateUserRequest struct {
 }
 
 type SelfUpdateRequest struct {
-	Name   string `json:"name"`
-	Email  string `json:"email"`
-	NFCTag string `json:"nfc_tag"`
+	Name   string  `json:"name"`
+	Email  string  `json:"email"`
+	NFCTag *string `json:"nfc_tag"`
 }
 
 type LoginUserRequest struct {
