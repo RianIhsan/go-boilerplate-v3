@@ -14,14 +14,14 @@ type RegisterUserResponse struct {
 	RoleId   uint64 `json:"role_id"`
 }
 
-func ConvertToRegisterUserResponse(entities *entities.User) RegisterUserResponse {
+func ConvertToRegisterUserResponse(entity *entities.User) RegisterUserResponse {
 	return RegisterUserResponse{
-		Id:       entities.ID,
-		Name:     entities.Name,
-		Username: entities.Username,
-		Avatar:   entities.Avatar,
-		Email:    entities.Email,
-		RoleId:   entities.RoleID,
+		Id:       entity.ID,
+		Name:     entity.Name,
+		Username: entity.Username,
+		Avatar:   entity.Avatar,
+		Email:    entity.Email,
+		RoleId:   entity.RoleID,
 	}
 }
 
@@ -30,12 +30,11 @@ func ToListUsers(users []entities.User) (response []RegisterUserResponse) {
 		response = append(response, ConvertToRegisterUserResponse(&user))
 	}
 	return response
-
 }
 
 type JwtToken struct {
 	Email        string  `json:"email"`
-	AccessToken  string  `json:"access_Token"`
+	AccessToken  string  `json:"access_token"`
 	RefreshToken string  `json:"refresh_token"`
 	CompanyID    uint64  `json:"company_id"`
 	BranchID     *uint64 `json:"branch_id"`
@@ -59,16 +58,27 @@ type UserDTO struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+// ✅ Fix nil pointer safe version
 func ToUserDTO(user entities.User) UserDTO {
+	var nfcTag string
+	if user.NFCTag != nil {
+		nfcTag = *user.NFCTag
+	}
+
+	var roleName string
+	if user.Role != nil {
+		roleName = user.Role.Name
+	}
+
 	return UserDTO{
 		ID:        user.ID,
 		Avatar:    user.Avatar,
 		Name:      user.Name,
 		Username:  user.Username,
 		Email:     user.Email,
-		NfCTag:    *user.NFCTag,
+		NfCTag:    nfcTag,
 		RoleId:    user.RoleID,
-		RoleName:  user.Role.Name,
+		RoleName:  roleName,
 		CreatedAt: user.CreatedAt,
 		UpdatedAt: user.UpdatedAt,
 	}
