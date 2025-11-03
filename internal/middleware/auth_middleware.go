@@ -12,10 +12,11 @@ import (
 )
 
 type Auth struct {
-	Id    uint64
-	Email string
-	Role  int
-	Name  string
+	Id       uint64
+	Email    string
+	Role     int
+	Name     string
+	Username string
 }
 
 func (mw *MiddlewareManager) AuthMiddleware() gin.HandlerFunc {
@@ -73,10 +74,11 @@ func (mw *MiddlewareManager) AuthMiddleware() gin.HandlerFunc {
 		}
 
 		auth := &Auth{
-			Id:    claims.ID,
-			Email: claims.Email,
-			Role:  claims.Role,
-			Name:  claims.Name,
+			Id:       claims.ID,
+			Email:    claims.Email,
+			Role:     claims.Role,
+			Name:     claims.Name,
+			Username: claims.Username,
 		}
 		context.Set("auth", auth)
 

@@ -11,19 +11,21 @@ import (
 )
 
 type Claim struct {
-	ID    uint64
-	Email string
-	Role  int
-	Name  string
+	ID       uint64
+	Email    string
+	Role     int
+	Name     string
+	Username string
 	jwt.RegisteredClaims
 }
 
 func GenerateJwtToken(user *entities.User, cfg *config.Config, expire time.Duration) (string, error) {
 	claims := Claim{
-		ID:    user.ID,
-		Email: user.Email,
-		Role:  int(user.RoleID),
-		Name:  user.Name,
+		ID:       user.ID,
+		Email:    user.Email,
+		Role:     int(user.RoleID),
+		Name:     user.Name,
+		Username: user.Username,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expire)),
 			Issuer:    "jwt",
@@ -40,11 +42,11 @@ func GenerateJwtToken(user *entities.User, cfg *config.Config, expire time.Durat
 }
 
 func GenerateTokenPair(user *entities.User, cfg *config.Config) (accToken, refToken string, err error) {
-	accToken, err = GenerateJwtToken(user, cfg, 30*time.Minute) // 30 minute
+	accToken, err = GenerateJwtToken(user, cfg, 1*24*time.Hour) // 1 day
 	if err != nil {
 		return
 	}
-	refToken, err = GenerateJwtToken(user, cfg, 1*24*time.Hour) // 1 day
+	refToken, err = GenerateJwtToken(user, cfg, 7*24*time.Hour) // 7 day
 	return
 }
 
