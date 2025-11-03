@@ -1,14 +1,20 @@
 package http
 
 import (
-	"github.com/gin-gonic/gin"
 	"ams-sentuh/internal/features/access"
+	"ams-sentuh/internal/middleware"
+
+	"github.com/gin-gonic/gin"
 )
 
-func MapAccessRoute(accessGroup *gin.RouterGroup, controller access.AccessDeliveryInterface) {
-	accessGroup.POST("/access", controller.CreateAccess())
-	accessGroup.GET("/access", controller.GetAllAccess())
-	accessGroup.GET("/access/:id", controller.GetAccess())
-	accessGroup.PUT("/access/:id", controller.UpdateAccess())
-	accessGroup.DELETE("/access/:id", controller.DeleteAccess())
+func MapAccessRoute(accessGroup *gin.RouterGroup, controller access.AccessDeliveryInterface, mw *middleware.MiddlewareManager) {
+	protectedRoutes := accessGroup.Group("")
+	protectedRoutes.Use(mw.AuthMiddleware())
+	protectedRoutes.Use(mw.CasbinMiddleware())
+
+	protectedRoutes.POST("/access", controller.CreateAccess())
+	protectedRoutes.GET("/access", controller.GetAllAccess())
+	protectedRoutes.GET("/access/:id", controller.GetAccess())
+	protectedRoutes.PUT("/access/:id", controller.UpdateAccess())
+	protectedRoutes.DELETE("/access/:id", controller.DeleteAccess())
 }

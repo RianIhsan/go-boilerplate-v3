@@ -238,7 +238,7 @@ func (s *Server) Bootstrap() error {
 		accessGroup := apiV1.Group("/v1")
 		// accessGroup.Use(middlewareManager.AdminRateLimitMiddleware(s.cfg))
 		{
-			accessDelivery.MapAccessRoute(accessGroup, accessDel)
+			accessDelivery.MapAccessRoute(accessGroup, accessDel, middlewareManager)
 		}
 
 		// permission routes with admin rate limiting

@@ -8,13 +8,14 @@ import (
 )
 
 func MapRoleRoutes(roleGroup *gin.RouterGroup, delivery role.RoleDeliveryInterface, mw *middleware.MiddlewareManager) {
-	casbinGroup := roleGroup.Group("")
-	//casbinGroup.Use(mw.AuthMiddleware())
-	//casbinGroup.Use(mw.CasbinMiddleware())
-	casbinGroup.GET("/role", delivery.GetAllRole())
-	casbinGroup.PUT("/role/permission", delivery.ModifyRolePermission())
-	casbinGroup.POST("/role", delivery.RegisterRole())
-	casbinGroup.GET("/role/:id", delivery.GetRoleByID())
-	casbinGroup.PUT("/role/:id", delivery.UpdateRole())
-	casbinGroup.DELETE("/role/:id", delivery.DeleteRoleByID())
+	protectedGroup := roleGroup.Group("")
+	protectedGroup.Use(mw.AuthMiddleware())
+	protectedGroup.Use(mw.CasbinMiddleware())
+
+	protectedGroup.GET("/role", delivery.GetAllRole())
+	protectedGroup.PUT("/role/permission", delivery.ModifyRolePermission())
+	protectedGroup.POST("/role", delivery.RegisterRole())
+	protectedGroup.GET("/role/:id", delivery.GetRoleByID())
+	protectedGroup.PUT("/role/:id", delivery.UpdateRole())
+	protectedGroup.DELETE("/role/:id", delivery.DeleteRoleByID())
 }
