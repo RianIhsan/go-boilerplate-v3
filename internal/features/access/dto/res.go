@@ -55,13 +55,13 @@ func ConvertToPermissionResponseList(data []entities.Permission) []PermissionRes
 
 func ConvertToGetAllAccessResponse(data entities.Access) GetAllAccessResponse {
 	return GetAllAccessResponse{
-		ID:        data.ID,
-		Name:      data.Name,
-		Link:      data.Link,
-		Priority:  data.Priority,
-		CreatedAt: data.CreatedAt,
-		UpdatedAt: data.UpdatedAt,
-		//Permissions: ConvertToPermissionResponseList(data.Permissions),
+		ID:          data.ID,
+		Name:        data.Name,
+		Link:        data.Link,
+		Priority:    data.Priority,
+		CreatedAt:   data.CreatedAt,
+		UpdatedAt:   data.UpdatedAt,
+		Permissions: ConvertToPermissionResponseList(data.Permissions),
 	}
 }
 
