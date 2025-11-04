@@ -3,4 +3,24 @@ p, 1, /api/v1/users, GET
 p, 1, /api/v1/users/*, GET
 p, 1, /api/v1/users/protected, PUT
 p, 1, /api/v1/users/avatar, PUT
+p, 1, /api/v1/users/*, PUT
+p, 1, /api/v1/users/*, DELETE
+p, 1, /access, READ
+p, 1, /api/v1/access, GET
+p, 1, /api/v1/access, POST
+p, 1, /api/v1/access/*, GET
+p, 1, /api/v1/access/*, PUT
+p, 1, /api/v1/access/*, DELETE
+p, 1, /role, READ
+p, 1, /api/v1/role, POST
+p, 1, /api/v1/role, GET
+p, 1, /api/v1/role/permission, PUT
+p, 1, /api/v1/role/*, GET
+p, 1, /api/v1/role/*, PUT
+p, 1, /api/v1/role/*, DELETE
 g, 1, 1
+g, 3, 1
+g, 4, 1
+g, 2, 1
+g, 5, 1
+g, 15, 2

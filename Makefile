@@ -1,24 +1,24 @@
 # ==============================================================================
 # Golang commands
-general:
+api:
 	go run ./cmd/api/main.go
 
-ws:
-	go run ./cmd/realtime/main.go
-
-worker:
-	go run ./cmd/worker/main.go
+#ws:
+#	go run ./cmd/realtime/main.go
+#
+#worker:
+#	go run ./cmd/worker/main.go
 
 build-api:
 	go build -o ./api ./cmd/api/main.go
 
-build-worker:
-	go build -o ./worker ./cmd/worker/main.go
+#build-worker:
+#	go build -o ./worker ./cmd/worker/main.go
+#
+#build-realtime:
+#	go build -o ./ws ./cmd/realtime/main.go
 
-build-realtime:
-	go build -o ./ws ./cmd/realtime/main.go
-
-build: build-api build-worker build-realtime
+build: build-api
 	@echo "✅ All services built"
 
 # Supervisor commands
